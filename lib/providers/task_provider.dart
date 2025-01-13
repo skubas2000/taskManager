@@ -1,15 +1,15 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:taskmanager/models/task_model.dart';  // Zaimportuj model
 
-// Provider do przechowywania listy zadań
-final taskProvider = StateNotifierProvider<TaskNotifier, List<String>>((ref) {
-  return TaskNotifier();
-});
-
-class TaskNotifier extends StateNotifier<List<String>> {
+// Provider dla listy zadań
+class TaskNotifier extends StateNotifier<List<Task>> {
   TaskNotifier() : super([]);
 
-  // Funkcja dodająca zadanie
-  void addTask(String task) {
-    state = [...state, task];  // Dodaje nowe zadanie do listy
+  void addTask(Task task) {
+    state = [...state, task];  // Dodaj nowe zadanie do listy
   }
 }
+
+final taskProvider = StateNotifierProvider<TaskNotifier, List<Task>>(
+  (ref) => TaskNotifier(),
+);

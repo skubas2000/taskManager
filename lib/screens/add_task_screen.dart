@@ -1,34 +1,42 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:taskmanager/providers/task_provider.dart';  // Zaimportuj provider'a
+import 'package:taskmanager/models/task_model.dart';  // Zaimportuj model 'Task'
 
-class AddTaskScreen extends StatelessWidget {
-  final TextEditingController taskController = TextEditingController();
-
-  AddTaskScreen({super.key});
-
+class AddTaskScreen extends ConsumerWidget {
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final titleController = TextEditingController();
+    final descriptionController = TextEditingController();
+
+    void addTask() {
+      final task = Task(
+        title: titleController.text,
+        description: descriptionController.text,
+      );
+      ref.read(taskProvider.notifier).addTask(task); // Dodaj zadanie do listy zadań
+      Navigator.pop(context); // Zamknij ekran po dodaniu zadania
+    }
+
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Dodaj zadanie'),
-      ),
+      appBar: AppBar(title: Text("Add Task")),
       body: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
+          children: [
             TextField(
-              controller: taskController,
-              decoration: InputDecoration(labelText: 'Nazwa zadania'),
+              controller: titleController,
+              decoration: InputDecoration(labelText: 'Title'),
             ),
-            SizedBox(height: 16),
+            TextField(
+              controller: descriptionController,
+              decoration: InputDecoration(labelText: 'Description'),
+              maxLines: 3,
+            ),
+            SizedBox(height: 20),
             ElevatedButton(
-              onPressed: () {
-                // Jeśli użytkownik podał zadanie, wróć do poprzedniego ekranu
-                if (taskController.text.isNotEmpty) {
-                  Navigator.pop(context, taskController.text);
-                }
-              },
-              child: Text('Dodaj zadanie'),
+              onPressed: addTask,
+              child: Text("Add Task"),
             ),
           ],
         ),
