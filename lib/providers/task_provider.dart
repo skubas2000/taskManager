@@ -10,19 +10,22 @@ class TaskNotifier extends StateNotifier<List<Task>> {
 
   // Metoda dodawania zadania do bazy danych i stanu Riverpod
   Future<void> addTask(Task task) async {
-    await localDBService.insertTask(task.title, task.description);  // Dodaj zadanie do bazy
-    state = [...state, task];  // Dodaj nowe zadanie do listy w stanie
+    await localDBService.insertTask(task.title, task.description);  // Zapisz zadanie
+    state = [...state, task];  // Dodaj zadanie do listy w stanie
   }
 
   // Metoda ładowania zadań z bazy danych
   Future<void> loadTasks() async {
-    final dbTasks = await localDBService.getTasks();  // Pobierz zadania z bazy danych
+    final dbTasks = await localDBService.getTasks();  // Pobierz zadania
     state = dbTasks.map((taskMap) {
-      return Task(
-        title: taskMap['title'],
-        description: taskMap['description'],
-      );
-    }).toList();  // Przekształć mapy w obiekty Task i ustaw stan
+      return Task.fromMap(taskMap);  // Przekształć mapy w obiekty Task
+    }).toList();  // Ustaw stan
+  }
+
+  // Metoda usuwania zadania (usuwamy na podstawie tytułu i opisu)
+  Future<void> deleteTask(Task task) async {
+    await localDBService.deleteTask(task.title, task.description);  // Usuń zadanie
+    state = state.where((t) => t.title != task.title || t.description != task.description).toList();  // Usuń zadanie z listy
   }
 }
 
