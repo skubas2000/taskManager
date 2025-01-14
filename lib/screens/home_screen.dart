@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';  // Zaimportuj Riverpod
-import 'package:taskmanager/models/task_model.dart'; // Zaimportuj model
 import 'package:taskmanager/screens/task_detail_screen.dart'; // Zaimportuj ekran szczegółów zadania
 import 'package:taskmanager/screens/add_task_screen.dart'; // Zaimportuj ekran dodawania zadania
 import 'package:taskmanager/providers/task_provider.dart'; // Zaimportuj provider
+import 'package:taskmanager/screens/info_screen.dart'; // Zaimportuj ekran Info
 
 class HomeScreen extends ConsumerStatefulWidget {
   @override
@@ -27,6 +27,20 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Task Manager'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.info),
+            onPressed: () {
+              // Przejdź do ekranu Info
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => InfoScreen(),
+                ),
+              );
+            },
+          ),
+        ],
       ),
       body: tasks.isEmpty
           ? Center(child: CircularProgressIndicator())  // Pokazuj loader, jeśli zadania są ładowane
