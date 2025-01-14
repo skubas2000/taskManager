@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:taskmanager/models/task_model.dart';  // Zaimportuj model
+import 'package:taskmanager/models/task_model.dart'; // Zaimportuj model
 
 class TaskDetailScreen extends StatelessWidget {
   final Task task;
@@ -9,7 +9,9 @@ class TaskDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(task.title)),
+      appBar: AppBar(
+        title: Text(task.title),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
