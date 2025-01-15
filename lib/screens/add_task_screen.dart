@@ -17,7 +17,6 @@ class AddTaskScreen extends ConsumerWidget {
         description: descriptionController.text,
       );
       ref.read(taskProvider.notifier).addTask(task); // Dodaj zadanie do listy zadań
-      log('xdDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD'); // Logowanie tworzenia bazy danych
       Navigator.pop(context); // Zamknij ekran po dodaniu zadania
     }
 
